@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<script  type="text/javascript" src="lib/jquery.js"> </script>	
+		<script  type="text/javascript" src="KeyMaper.js"> </script>
+		<script type ="text/javascript"> KeyMaper.createMap();</script>
+		<script  type="text/javascript" src="KeyboardDisplay.js"> </script>	
+
+		<script  type="text/javascript" src="lib/dist/paper-full.js"> </script>
+		<script type="text/paperscript" canvas="myCanvas">
+
+		var raster = new Raster('ktest');
+		project.activeLayer.position = view.center;
+		raster.on('load', function() {
+			raster.size = new Size(15, 6);
+			for (var y = 0; y < raster.height; y++) {
+				for(var x = 0; x < raster.width; x++) {
+					// Get the color of the pixel:
+					var color = raster.getPixel(x, y);
+					console.log(color.toCSS());
+					console.log("from ANALIZE y:"+y+"x:"+x);
+					set_color([y,x],color.toCSS() );
+				}
+			}
+		});
+		</script>		
+
+		<style>
+			#keyboard-container{
+				width:600px;
+				overflow: scroll-auto;
+			}
+			.key{
+				display: inline-block;
+				height: 25px;
+				width: 25px;
+				border: 1px  solid black;
+				margin:3px;
+				/*background-color:grey;*/
+			}
+			.space-bar, .enter{
+				background:grey;
+			}
+			.return{
+				background-color: red;
+			}
+		</style>	
+	</head>
+	<body>
+		<canvas id="myCanvas" style="display:none;"></canvas>
+		<div id="keyboard-container">
+		</div>
+		<img id="ktest" src="./images/invader.jpg" style="display:none;">
+	</body>
+</html>
